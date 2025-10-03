@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kartu Anggota PKBM Celah Cahaya</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        .card-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .shine-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .shine-effect::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+            100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        }
+        
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+        }
+        
+        @media print {
+            body { margin: 0; }
+            .no-print { display: none; }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-4xl w-full">
+        <!-- Form Input -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8 no-print">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Generator Kartu Anggota PKBM Celah Cahaya</h2>
+            
+            <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label>
+                    <input type="text" id="nama" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Masukkan nama lengkap">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Nomor Anggota</label>
+                    <input type="text" id="nomor" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Contoh: WB-2024-001">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Program</label>
+                    <select id="program" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="Paket A">Paket A (Setara SD)</option>
+                        <option value="Paket B">Paket B (Setara SMP)</option>
+                        <option value="Paket C">Paket C (Setara SMA)</option>
+                        <option value="Kursus Komputer">Kursus Komputer</option>
+                        <option value="Kursus Bahasa">Kursus Bahasa</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Tahun Masuk</label>
+                    <input type="number" id="tahun" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="2024" min="2020" max="2030">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Tempat Lahir</label>
+                    <input type="text" id="tempat" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Kota kelahiran">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal Lahir</label>
+                    <input type="date" id="tanggal" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Foto Profil</label>
+                    <div class="flex items-center space-x-4">
+                        <input type="file" id="foto" accept="image/*" class="hidden" onchange="previewFoto(event)">
+                        <button type="button" onclick="document.getElementById('foto').click()" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md font-medium transition-colors">
+                            Pilih Foto
+                        </button>
+                        <button type="button" onclick="removeFoto()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md font-medium transition-colors">
+                            Hapus Foto
+                        </button>
+                        <span id="fotoName" class="text-sm text-gray-600">Belum ada foto dipilih</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-1">Format: JPG, PNG, GIF. Maksimal 2MB</p>
+                </div>
+            </div>
+            
+            <div class="mt-6 text-center">
+                <button onclick="updateCard()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md font-medium transition-colors mr-4">
+                    Perbarui Kartu
+                </button>
+                <button onclick="printCard()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-md font-medium transition-colors">
+                    Cetak Kartu
+                </button>
+            </div>
+        </div>
+
+        <!-- Kartu Anggota -->
+        <div class="flex justify-center">
+            <div id="memberCard" class="w-96 h-60 card-gradient rounded-xl shadow-2xl shine-effect transform hover:scale-105 transition-transform duration-300">
+                <!-- Bagian Depan Kartu -->
+                <div class="h-full p-6 text-white relative">
+                    <!-- Header -->
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center">
+                            <!-- Logo PKBM -->
+                            <div class="logo-icon mr-3 flex items-center justify-center">
+                                <img src="https://lh3.googleusercontent.com/d/1dUg9I48rLo8GDFmNsupiy549YGTGjma5" 
+                                     alt="Logo PKBM Celah Cahaya" 
+                                     class="w-14 h-14 object-contain"
+                                     style="background: transparent; mix-blend-mode: multiply;"
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                                     onload="console.log('Logo berhasil dimuat')"
+                                     crossorigin="anonymous">
+                                <div class="w-14 h-14 flex items-center justify-center" style="display: none;">
+                                    <span class="text-white font-bold text-lg">CC</span>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-sm font-bold">PKBM</h3>
+                                <h2 class="text-lg font-bold">CELAH CAHAYA</h2>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-xs opacity-90">KARTU ANGGOTA</div>
+                            <div class="text-xs opacity-90">WARGA BELAJAR</div>
+                        </div>
+                    </div>
+
+                    <!-- Foto Placeholder -->
+                    <div id="fotoContainer" class="absolute top-6 right-6 w-16 h-20 bg-white bg-opacity-20 rounded border-2 border-white border-dashed flex items-center justify-center overflow-hidden">
+                        <img id="cardFoto" class="w-full h-full object-cover hidden" alt="Foto Profil">
+                        <svg id="fotoPlaceholder" class="w-8 h-8 text-white opacity-60" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+
+                    <!-- Informasi Anggota -->
+                    <div class="mt-8">
+                        <div class="mb-2">
+                            <div class="text-xs opacity-90">NAMA</div>
+                            <div id="cardNama" class="font-bold text-lg">NAMA LENGKAP</div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4 text-xs">
+                            <div>
+                                <div class="opacity-90">NO. ANGGOTA</div>
+                                <div id="cardNomor" class="font-semibold">WB-2024-001</div>
+                            </div>
+                            <div>
+                                <div class="opacity-90">PROGRAM</div>
+                                <div id="cardProgram" class="font-semibold">Paket C</div>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4 text-xs mt-2">
+                            <div>
+                                <div class="opacity-90">TTL</div>
+                                <div id="cardTTL" class="font-semibold">Jakarta, 01/01/2000</div>
+                            </div>
+                            <div>
+                                <div class="opacity-90">TAHUN MASUK</div>
+                                <div id="cardTahun" class="font-semibold">2024</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Watermark -->
+                    <div class="absolute bottom-2 right-4 text-xs opacity-50">
+                        Valid s/d 2025
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Informasi Tambahan -->
+        <div class="mt-8 bg-white rounded-lg shadow-lg p-6 no-print">
+            <h3 class="text-lg font-bold text-gray-800 mb-4">Tentang PKBM Celah Cahaya</h3>
+            <div class="grid md:grid-cols-2 gap-6 text-sm text-gray-600">
+                <div>
+                    <h4 class="font-semibold text-gray-800 mb-2">Program yang Tersedia:</h4>
+                    <ul class="space-y-1">
+                        <li>• Paket A (Setara SD/MI)</li>
+                        <li>• Paket B (Setara SMP/MTs)</li>
+                        <li>• Paket C (Setara SMA/MA)</li>
+                        <li>• Kursus Komputer</li>
+                        <li>• Kursus Bahasa Inggris</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-gray-800 mb-2">Fasilitas:</h4>
+                    <ul class="space-y-1">
+                        <li>• Ruang belajar yang nyaman</li>
+                        <li>• Perpustakaan</li>
+                        <li>• Lab komputer</li>
+                        <li>• Bimbingan konseling</li>
+                        <li>• Sertifikat resmi</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateCard() {
+            const nama = document.getElementById('nama').value || 'NAMA LENGKAP';
+            const nomor = document.getElementById('nomor').value || 'WB-2024-001';
+            const program = document.getElementById('program').value || 'Paket C';
+            const tahun = document.getElementById('tahun').value || '2024';
+            const tempat = document.getElementById('tempat').value || 'Jakarta';
+            const tanggal = document.getElementById('tanggal').value;
+            
+            let ttl = `${tempat}, `;
+            if (tanggal) {
+                const date = new Date(tanggal);
+                const day = String(date.getDate()).padStart(2, '0');
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const year = date.getFullYear();
+                ttl += `${day}/${month}/${year}`;
+            } else {
+                ttl += '01/01/2000';
+            }
+            
+            document.getElementById('cardNama').textContent = nama.toUpperCase();
+            document.getElementById('cardNomor').textContent = nomor;
+            document.getElementById('cardProgram').textContent = program;
+            document.getElementById('cardTahun').textContent = tahun;
+            document.getElementById('cardTTL').textContent = ttl;
+        }
+        
+        function printCard() {
+            window.print();
+        }
+        
+        // Generate unique member number
+        function generateUniqueNumber() {
+            const now = new Date();
+            const tahun = now.getFullYear();
+            const timestamp = now.getTime().toString().slice(-6); // Last 6 digits of timestamp
+            const randomNum = Math.floor(Math.random() * 99) + 1;
+            return `WB-${tahun}-${timestamp}${String(randomNum).padStart(2, '0')}`;
+        }
+        
+        // Photo upload functions
+        function previewFoto(event) {
+            const file = event.target.files[0];
+            const fotoName = document.getElementById('fotoName');
+            const cardFoto = document.getElementById('cardFoto');
+            const fotoPlaceholder = document.getElementById('fotoPlaceholder');
+            
+            if (file) {
+                // Check file size (2MB limit)
+                if (file.size > 2 * 1024 * 1024) {
+                    alert('Ukuran file terlalu besar! Maksimal 2MB.');
+                    event.target.value = '';
+                    return;
+                }
+                
+                // Check file type
+                if (!file.type.startsWith('image/')) {
+                    alert('File harus berupa gambar!');
+                    event.target.value = '';
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    cardFoto.src = e.target.result;
+                    cardFoto.classList.remove('hidden');
+                    fotoPlaceholder.classList.add('hidden');
+                    fotoName.textContent = file.name;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        function removeFoto() {
+            const fotoInput = document.getElementById('foto');
+            const fotoName = document.getElementById('fotoName');
+            const cardFoto = document.getElementById('cardFoto');
+            const fotoPlaceholder = document.getElementById('fotoPlaceholder');
+            
+            fotoInput.value = '';
+            cardFoto.src = '';
+            cardFoto.classList.add('hidden');
+            fotoPlaceholder.classList.remove('hidden');
+            fotoName.textContent = 'Belum ada foto dipilih';
+        }
+        
+        // Auto-generate nomor anggota when page loads or year changes
+        function autoGenerateNumber() {
+            const nomorField = document.getElementById('nomor');
+            if (!nomorField.value) {
+                nomorField.value = generateUniqueNumber();
+            }
+        }
+        
+        document.getElementById('tahun').addEventListener('change', function() {
+            // Always generate new unique number when year changes
+            document.getElementById('nomor').value = generateUniqueNumber();
+        });
+        
+        // Button to manually generate new unique number
+        document.querySelector('button[onclick="updateCard()"]').insertAdjacentHTML('afterend', 
+            '<button onclick="document.getElementById(\'nomor\').value = generateUniqueNumber(); updateCard();" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md font-medium transition-colors ml-2">Generate Nomor Baru</button>'
+        );
+        
+        // Set default values
+        document.getElementById('tahun').value = new Date().getFullYear();
+        autoGenerateNumber();
+        updateCard();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'988d199fe6dbd176',t:'MTc1OTUwMTQzNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
