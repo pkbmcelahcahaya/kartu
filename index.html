@@ -595,9 +595,6 @@
         }
         
         function printCard() {
-            // Update card data first
-            updateCard();
-            
             // Set print date
             const now = new Date();
             const printDate = now.toLocaleDateString('id-ID', {
@@ -610,16 +607,7 @@
             });
             document.getElementById('printDate').textContent = printDate;
             
-            // Copy all data to print card
-            const printCardNama = document.querySelector('#printLayout #cardNamaPrint');
-            const printCardNomor = document.querySelector('#printLayout #cardNomorPrint');
-            const printCardProgram = document.querySelector('#printLayout #cardProgramPrint');
-            const printCardTahun = document.querySelector('#printLayout #cardTahunPrint');
-            const printCardTTL = document.querySelector('#printLayout #cardTTLPrint');
-            const printCardFoto = document.querySelector('#printLayout #cardFotoPrint');
-            const printFotoPlaceholder = document.querySelector('#printLayout #fotoPlaceholderPrint');
-            
-            // Get current data
+            // Get current form data
             const nama = document.getElementById('nama').value || 'NAMA LENGKAP';
             const nomor = document.getElementById('nomor').value || 'WB-2024-001';
             const program = document.getElementById('program').value || 'Paket C';
@@ -627,6 +615,7 @@
             const tempat = document.getElementById('tempat').value || 'Jakarta';
             const tanggal = document.getElementById('tanggal').value;
             
+            // Format TTL
             let ttl = `${tempat}, `;
             if (tanggal) {
                 const date = new Date(tanggal);
@@ -638,38 +627,41 @@
                 ttl += '01/01/2000';
             }
             
-            // Update print card data
-            if (printCardNama) printCardNama.textContent = nama.toUpperCase();
-            if (printCardNomor) printCardNomor.textContent = nomor;
-            if (printCardProgram) printCardProgram.textContent = program;
-            if (printCardTahun) printCardTahun.textContent = tahun;
-            if (printCardTTL) printCardTTL.textContent = ttl;
+            // Update print card elements directly
+            document.getElementById('cardNamaPrint').textContent = nama.toUpperCase();
+            document.getElementById('cardNomorPrint').textContent = nomor;
+            document.getElementById('cardProgramPrint').textContent = program;
+            document.getElementById('cardTahunPrint').textContent = tahun;
+            document.getElementById('cardTTLPrint').textContent = ttl;
             
-            // Copy photo
+            // Handle photo
             const regularFoto = document.getElementById('cardFoto');
-            if (regularFoto && !regularFoto.classList.contains('hidden') && printCardFoto && printFotoPlaceholder) {
-                printCardFoto.src = regularFoto.src;
-                printCardFoto.classList.remove('hidden');
-                printFotoPlaceholder.classList.add('hidden');
-            } else if (printCardFoto && printFotoPlaceholder) {
-                printCardFoto.classList.add('hidden');
-                printFotoPlaceholder.classList.remove('hidden');
+            const printFoto = document.getElementById('cardFotoPrint');
+            const printPlaceholder = document.getElementById('fotoPlaceholderPrint');
+            
+            if (regularFoto && !regularFoto.classList.contains('hidden') && regularFoto.src) {
+                printFoto.src = regularFoto.src;
+                printFoto.classList.remove('hidden');
+                printPlaceholder.classList.add('hidden');
+            } else {
+                printFoto.classList.add('hidden');
+                printPlaceholder.classList.remove('hidden');
             }
             
             // Show print layout and hide regular display
             document.getElementById('printLayout').classList.remove('hidden');
             document.getElementById('regularDisplay').classList.add('hidden');
             
-            // Print
+            // Print with delay to ensure rendering
             setTimeout(() => {
                 window.print();
                 
-                // Restore regular display after print
+                // Restore regular display after print dialog
                 setTimeout(() => {
                     document.getElementById('printLayout').classList.add('hidden');
                     document.getElementById('regularDisplay').classList.remove('hidden');
                 }, 1000);
-            }, 100);
+            }, 200);
         }
         
         // Generate unique member number
@@ -750,5 +742,5 @@
         autoGenerateNumber();
         updateCard();
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'988d2f4243c5d176',t:'MTc1OTUwMjMyMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'988d338d060cd176',t:'MTc1OTUwMjQ5Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
