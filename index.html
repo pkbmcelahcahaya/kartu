@@ -142,9 +142,52 @@
             }
             
             #memberCard {
-                transform: scale(1.2) !important;
-                margin: 2rem 0;
+                width: 85.6mm !important; /* Standard ID card width */
+                height: 53.98mm !important; /* Standard ID card height */
+                transform: none !important;
+                margin: 2rem auto;
                 box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+                font-size: 0.7rem !important;
+            }
+            
+            #memberCard .text-lg {
+                font-size: 0.9rem !important;
+            }
+            
+            #memberCard .text-sm {
+                font-size: 0.65rem !important;
+            }
+            
+            #memberCard .text-xs {
+                font-size: 0.55rem !important;
+            }
+            
+            #memberCard .p-6 {
+                padding: 0.75rem !important;
+            }
+            
+            #memberCard .p-3 {
+                padding: 0.5rem !important;
+            }
+            
+            #memberCard .p-2 {
+                padding: 0.25rem !important;
+            }
+            
+            #memberCard .w-16 {
+                width: 2.5rem !important;
+            }
+            
+            #memberCard .h-20 {
+                height: 3rem !important;
+            }
+            
+            #memberCard .w-12 {
+                width: 2rem !important;
+            }
+            
+            #memberCard .h-12 {
+                height: 2rem !important;
             }
             
             .print-footer {
@@ -311,7 +354,84 @@
                 </div>
                 
                 <div id="memberCard" class="w-96 h-60 card-modern rounded-2xl shadow-2xl shine-effect floating-shapes">
-                    <!-- Card content will be here -->
+                    <!-- Bagian Depan Kartu Print -->
+                    <div class="h-full p-6 text-white relative z-10">
+                        <!-- Header dengan Glass Effect -->
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center">
+                                <!-- Logo PKBM dengan Glass Container -->
+                                <div class="logo-icon mr-3 flex items-center justify-center glass-effect rounded-xl p-2">
+                                    <img src="https://lh3.googleusercontent.com/d/1dUg9I48rLo8GDFmNsupiy549YGTGjma5" 
+                                         alt="Logo PKBM Celah Cahaya" 
+                                         class="w-12 h-12 object-contain"
+                                         style="background: transparent; mix-blend-mode: multiply; filter: brightness(1.2);"
+                                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                                         crossorigin="anonymous">
+                                    <div class="w-12 h-12 flex items-center justify-center" style="display: none;">
+                                        <span class="text-white font-bold text-lg">CC</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-bold tracking-wider">PKBM</h3>
+                                    <h2 class="text-lg font-bold tracking-wide">CELAH CAHAYA</h2>
+                                </div>
+                            </div>
+                            <div class="text-right glass-effect rounded-lg px-3 py-2">
+                                <div class="text-xs opacity-90 font-medium">KARTU ANGGOTA</div>
+                                <div class="text-xs opacity-90 font-medium">WARGA BELAJAR</div>
+                            </div>
+                        </div>
+
+                        <!-- Foto Placeholder dengan Modern Design -->
+                        <div class="absolute top-6 right-6 w-16 h-20 glass-effect rounded-xl border border-white border-opacity-30 flex items-center justify-center overflow-hidden shadow-lg">
+                            <img id="cardFotoPrint" class="w-full h-full object-cover hidden rounded-xl" alt="Foto Profil">
+                            <svg id="fotoPlaceholderPrint" class="w-8 h-8 text-white opacity-70" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+
+                        <!-- Informasi Anggota dengan Modern Layout -->
+                        <div class="mt-6">
+                            <div class="mb-3 glass-effect rounded-lg p-3">
+                                <div class="text-xs opacity-80 font-medium tracking-wide">NAMA LENGKAP</div>
+                                <div id="cardNamaPrint" class="font-bold text-lg tracking-wide">NAMA LENGKAP</div>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-3 text-xs">
+                                <div class="glass-effect rounded-lg p-2">
+                                    <div class="opacity-80 font-medium">NO. ANGGOTA</div>
+                                    <div id="cardNomorPrint" class="font-semibold text-sm">WB-2024-001</div>
+                                </div>
+                                <div class="glass-effect rounded-lg p-2">
+                                    <div class="opacity-80 font-medium">PROGRAM</div>
+                                    <div id="cardProgramPrint" class="font-semibold text-sm">Paket C</div>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-3 text-xs mt-3">
+                                <div class="glass-effect rounded-lg p-2">
+                                    <div class="opacity-80 font-medium">TTL</div>
+                                    <div id="cardTTLPrint" class="font-semibold text-sm">Jakarta, 01/01/2000</div>
+                                </div>
+                                <div class="glass-effect rounded-lg p-2">
+                                    <div class="opacity-80 font-medium">TAHUN MASUK</div>
+                                    <div id="cardTahunPrint" class="font-semibold text-sm">2024</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Watermark dengan Modern Style -->
+                        <div class="absolute bottom-3 right-4 glass-effect rounded-full px-3 py-1">
+                            <div class="text-xs opacity-70 font-medium">Valid s/d 2025</div>
+                        </div>
+                        
+                        <!-- Decorative Elements -->
+                        <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+                            <div class="absolute top-4 left-4 w-2 h-2 bg-white bg-opacity-30 rounded-full animate-pulse"></div>
+                            <div class="absolute bottom-8 left-8 w-1 h-1 bg-white bg-opacity-40 rounded-full animate-pulse" style="animation-delay: 1s;"></div>
+                            <div class="absolute top-12 right-20 w-1.5 h-1.5 bg-white bg-opacity-25 rounded-full animate-pulse" style="animation-delay: 2s;"></div>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="print-info">
@@ -475,6 +595,9 @@
         }
         
         function printCard() {
+            // Update card data first
+            updateCard();
+            
             // Set print date
             const now = new Date();
             const printDate = now.toLocaleDateString('id-ID', {
@@ -487,11 +610,50 @@
             });
             document.getElementById('printDate').textContent = printDate;
             
-            // Clone card content to print layout
-            const regularCard = document.querySelector('#regularDisplay .h-full');
-            const printCard = document.querySelector('#printLayout #memberCard');
-            if (regularCard && printCard) {
-                printCard.innerHTML = regularCard.outerHTML;
+            // Copy all data to print card
+            const printCardNama = document.querySelector('#printLayout #cardNamaPrint');
+            const printCardNomor = document.querySelector('#printLayout #cardNomorPrint');
+            const printCardProgram = document.querySelector('#printLayout #cardProgramPrint');
+            const printCardTahun = document.querySelector('#printLayout #cardTahunPrint');
+            const printCardTTL = document.querySelector('#printLayout #cardTTLPrint');
+            const printCardFoto = document.querySelector('#printLayout #cardFotoPrint');
+            const printFotoPlaceholder = document.querySelector('#printLayout #fotoPlaceholderPrint');
+            
+            // Get current data
+            const nama = document.getElementById('nama').value || 'NAMA LENGKAP';
+            const nomor = document.getElementById('nomor').value || 'WB-2024-001';
+            const program = document.getElementById('program').value || 'Paket C';
+            const tahun = document.getElementById('tahun').value || '2024';
+            const tempat = document.getElementById('tempat').value || 'Jakarta';
+            const tanggal = document.getElementById('tanggal').value;
+            
+            let ttl = `${tempat}, `;
+            if (tanggal) {
+                const date = new Date(tanggal);
+                const day = String(date.getDate()).padStart(2, '0');
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const year = date.getFullYear();
+                ttl += `${day}/${month}/${year}`;
+            } else {
+                ttl += '01/01/2000';
+            }
+            
+            // Update print card data
+            if (printCardNama) printCardNama.textContent = nama.toUpperCase();
+            if (printCardNomor) printCardNomor.textContent = nomor;
+            if (printCardProgram) printCardProgram.textContent = program;
+            if (printCardTahun) printCardTahun.textContent = tahun;
+            if (printCardTTL) printCardTTL.textContent = ttl;
+            
+            // Copy photo
+            const regularFoto = document.getElementById('cardFoto');
+            if (regularFoto && !regularFoto.classList.contains('hidden') && printCardFoto && printFotoPlaceholder) {
+                printCardFoto.src = regularFoto.src;
+                printCardFoto.classList.remove('hidden');
+                printFotoPlaceholder.classList.add('hidden');
+            } else if (printCardFoto && printFotoPlaceholder) {
+                printCardFoto.classList.add('hidden');
+                printFotoPlaceholder.classList.remove('hidden');
             }
             
             // Show print layout and hide regular display
@@ -588,5 +750,5 @@
         autoGenerateNumber();
         updateCard();
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'988d2790c7f8d176',t:'MTc1OTUwMjAwNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'988d2f4243c5d176',t:'MTc1OTUwMjMyMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
