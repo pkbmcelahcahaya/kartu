@@ -90,8 +90,138 @@
         }
         
         @media print {
-            body { margin: 0; }
+            body { 
+                margin: 0; 
+                background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%) !important;
+                -webkit-print-color-adjust: exact;
+                color-adjust: exact;
+            }
             .no-print { display: none; }
+            
+            .print-container {
+                display: flex !important;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+                padding: 2rem;
+                background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+                position: relative;
+            }
+            
+            .hidden {
+                display: none !important;
+            }
+            
+            .print-header {
+                text-align: center;
+                margin-bottom: 2rem;
+                color: #1e293b;
+            }
+            
+            .print-title {
+                font-size: 2rem;
+                font-weight: bold;
+                margin-bottom: 0.5rem;
+                color: #0f172a;
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .print-subtitle {
+                font-size: 1.2rem;
+                color: #475569;
+                margin-bottom: 1rem;
+            }
+            
+            .print-divider {
+                width: 200px;
+                height: 3px;
+                background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+                margin: 0 auto 2rem;
+                border-radius: 2px;
+            }
+            
+            #memberCard {
+                transform: scale(1.2) !important;
+                margin: 2rem 0;
+                box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+            }
+            
+            .print-footer {
+                margin-top: 2rem;
+                text-align: center;
+                color: #64748b;
+                font-size: 0.9rem;
+            }
+            
+            .print-info {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+                margin-top: 2rem;
+                max-width: 600px;
+            }
+            
+            .print-info-box {
+                background: white;
+                padding: 1.5rem;
+                border-radius: 12px;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                border-left: 4px solid #3b82f6;
+            }
+            
+            .print-info-title {
+                font-weight: bold;
+                color: #1e293b;
+                margin-bottom: 0.5rem;
+                font-size: 1.1rem;
+            }
+            
+            .print-decorative-border {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                border: 8px solid transparent;
+                border-image: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899, #f59e0b) 1;
+                pointer-events: none;
+            }
+            
+            .print-corner-decoration {
+                position: absolute;
+                width: 40px;
+                height: 40px;
+                border: 3px solid #3b82f6;
+            }
+            
+            .print-corner-decoration.top-left {
+                top: 20px;
+                left: 20px;
+                border-right: none;
+                border-bottom: none;
+            }
+            
+            .print-corner-decoration.top-right {
+                top: 20px;
+                right: 20px;
+                border-left: none;
+                border-bottom: none;
+            }
+            
+            .print-corner-decoration.bottom-left {
+                bottom: 20px;
+                left: 20px;
+                border-right: none;
+                border-top: none;
+            }
+            
+            .print-corner-decoration.bottom-right {
+                bottom: 20px;
+                right: 20px;
+                border-left: none;
+                border-top: none;
+            }
         }
     </style>
 </head>
@@ -166,7 +296,47 @@
 
         <!-- Kartu Anggota -->
         <div class="flex justify-center">
-            <div id="memberCard" class="w-96 h-60 card-modern rounded-2xl shadow-2xl shine-effect floating-shapes transform hover:scale-105 transition-all duration-500 hover:shadow-3xl">
+            <!-- Print Layout -->
+            <div class="print-container hidden" id="printLayout">
+                <div class="print-decorative-border"></div>
+                <div class="print-corner-decoration top-left"></div>
+                <div class="print-corner-decoration top-right"></div>
+                <div class="print-corner-decoration bottom-left"></div>
+                <div class="print-corner-decoration bottom-right"></div>
+                
+                <div class="print-header">
+                    <h1 class="print-title">PKBM CELAH CAHAYA</h1>
+                    <p class="print-subtitle">Pusat Kegiatan Belajar Masyarakat</p>
+                    <div class="print-divider"></div>
+                </div>
+                
+                <div id="memberCard" class="w-96 h-60 card-modern rounded-2xl shadow-2xl shine-effect floating-shapes">
+                    <!-- Card content will be here -->
+                </div>
+                
+                <div class="print-info">
+                    <div class="print-info-box">
+                        <div class="print-info-title">Kontak Informasi</div>
+                        <p>📍 Jl. Pendidikan No. 123, Jakarta</p>
+                        <p>📞 (021) 1234-5678</p>
+                        <p>✉️ info@pkbmcelahcahaya.id</p>
+                    </div>
+                    <div class="print-info-box">
+                        <div class="print-info-title">Jam Operasional</div>
+                        <p>Senin - Jumat: 08:00 - 16:00</p>
+                        <p>Sabtu: 08:00 - 12:00</p>
+                        <p>Minggu: Tutup</p>
+                    </div>
+                </div>
+                
+                <div class="print-footer">
+                    <p>Kartu ini adalah bukti resmi keanggotaan PKBM Celah Cahaya</p>
+                    <p>Dicetak pada: <span id="printDate"></span></p>
+                </div>
+            </div>
+            
+            <!-- Regular Display -->
+            <div id="regularDisplay" class="w-96 h-60 card-modern rounded-2xl shadow-2xl shine-effect floating-shapes transform hover:scale-105 transition-all duration-500 hover:shadow-3xl">
                 <!-- Bagian Depan Kartu -->
                 <div class="h-full p-6 text-white relative z-10">
                     <!-- Header dengan Glass Effect -->
@@ -305,7 +475,39 @@
         }
         
         function printCard() {
-            window.print();
+            // Set print date
+            const now = new Date();
+            const printDate = now.toLocaleDateString('id-ID', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            document.getElementById('printDate').textContent = printDate;
+            
+            // Clone card content to print layout
+            const regularCard = document.querySelector('#regularDisplay .h-full');
+            const printCard = document.querySelector('#printLayout #memberCard');
+            if (regularCard && printCard) {
+                printCard.innerHTML = regularCard.outerHTML;
+            }
+            
+            // Show print layout and hide regular display
+            document.getElementById('printLayout').classList.remove('hidden');
+            document.getElementById('regularDisplay').classList.add('hidden');
+            
+            // Print
+            setTimeout(() => {
+                window.print();
+                
+                // Restore regular display after print
+                setTimeout(() => {
+                    document.getElementById('printLayout').classList.add('hidden');
+                    document.getElementById('regularDisplay').classList.remove('hidden');
+                }, 1000);
+            }, 100);
         }
         
         // Generate unique member number
@@ -386,5 +588,5 @@
         autoGenerateNumber();
         updateCard();
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'988d21372487d176',t:'MTc1OTUwMTc0Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'988d2790c7f8d176',t:'MTc1OTUwMjAwNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
